@@ -1,0 +1,56 @@
+#!/bin/sh -e
+
+# Create fake user and group with the same ids than
+# the host user, and use its identity all along
+# in the container so that all created files in
+# mounted volumes belongs to the host user.
+#
+# https://stackoverflow.com/questions/41857462
+
+if [ "x$GROUP_ID" = x -o "x$USER_ID" = x ] ;then
+    echo 'Error: $USER_ID and $GROUP_ID environment variable not set' >&2
+    echo Abort >&2
+    exit 1
+fi
+
+# Create fake user
+CUR_GROUP=`grep ":${GROUP_ID}:" /etc/group | cut -d: -f1`
+if [ "x$CUR_GROUP" != x ] ;then
+    groupmod --new-name dummy "$CUR_GROUP"
+else
+    grep -q ^dummy: /etc/group || groupadd -g $GROUP_ID dummy
+fi
+grep -q ^dummy: /etc/passwd || useradd -u $USER_ID -g $GROUP_ID dummy -s /bin/bash
+
+mkdir -p /home/dummy/.ssh
+# Setup SSH configuration
+cat <<EOF > /home/dummy/.ssh/config
+StrictHostKeyChecking no
+UserKnownHostsFile /dev/null
+EOF
+chown -R dummy:dummy /home/dummy
+
+# Grants write permissions to some paths
+for path in /.jupyter /.local /opt/src ; do
+    mkdir -p "$path"
+    chmod 777 "$path"
+    chmod +t "$path"
+done
+
+EXAMPLE_DIR=/opt/src/notebooks/user_manual
+if ! [ -d "$EXAMPLE_DIR" ] ;then
+    cp -r /var/src/user_manual "$EXAMPLE_DIR"
+    chown -R dummy:dummy "$EXAMPLE_DIR"
+fi
+
+# Run the given command as root if bash or sh,
+# the fake user otherwise.
+case "$1" in
+    sh|bash)
+        exec $@
+        ;;
+    *)
+        cd /opt/src/notebooks
+        gosu dummy "$@"
+        ;;
+esac
