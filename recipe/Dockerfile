@@ -30,7 +30,7 @@ RUN apt-get --yes -qq update \
                       libxft2 \
                       libxinerama1 \
                       pandoc \
-                      vim       \
+                      vim \
                       wget \
                       zlib1g-dev \
  && apt-get --yes -qq clean \
@@ -135,6 +135,11 @@ CMD [ \
     "--ip=0.0.0.0", \
     "--notebook-dir=/opt/src/notebooks" \
 ]
+
+###############################################################################
+# Lines above deal with STEPS installation and overall setup of the environment
+# Lines below deal with Multiscale Run project components (rest of the solvers)
+###############################################################################
 
 ADD bloodflow /opt/src/bloodflow
 RUN cd /opt/src/bloodflow \
