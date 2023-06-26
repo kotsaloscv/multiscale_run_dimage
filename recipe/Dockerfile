@@ -1,8 +1,5 @@
-FROM --platform=linux/amd64 cnsoist/steps/4.1.1
+FROM --platform=linux/amd64 cnsoist/steps/5.0.0a
 MAINTAINER Christos KOTSALOS <christos.kotsalos@epfl.ch>
-
-RUN conda install h5py \
- && /opt/conda/bin/conda install -c conda-forge petsc4py
 
 ADD bloodflow /opt/src/bloodflow
 RUN cd /opt/src/bloodflow \
