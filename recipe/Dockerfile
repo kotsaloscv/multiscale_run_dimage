@@ -91,7 +91,7 @@ RUN if [ "x$BUILD_OMEGA_H" = xtrue ] ; then ( \
 && rm -rf /var/src/omega_h \
    ) fi
 
-ARG STEPS_VERSION=4.1.1
+ARG STEPS_VERSION=5.0.0
 ARG STEPS_UT=false
 ARG STEPS_UT_KEEP_GOING=true
 ENV CTEST_OUTPUT_ON_FAILURE=1
@@ -163,7 +163,10 @@ RUN cd /opt/src \
  && sed -i 's/"scipy"/#"scipy"/g' setup.py \
  && sed -i 's/"cython"/#"cython"/g' setup.py \
  && sed -i 's/"matplotlib"/#"matplotlib"/g' setup.py \
- && sed -i 's/"libsonata"/"libsonata==0.1.20"/g' setup.py \
+ && sed -i 's/"libsonata"/#"libsonata"/g' setup.py \
+ && sed -i 's/"morphio"/#"morphio"/g' setup.py \
+ && /opt/conda/bin/pip install git+https://github.com/BlueBrain/libsonata.git@v0.1.22 \
+ && /opt/conda/bin/pip install git+https://github.com/BlueBrain/MorphIO.git@v3.3.5 \
  && /opt/conda/bin/pip install -e .
 ENV BACKEND_SOLVER_BFS='scipy'
 ENV DEBUG_BFS=0
@@ -200,9 +203,11 @@ RUN if [ -d "${JULIA_DEPOT_PATH}" ]; then \
     fi \
  && /opt/conda/bin/pip install diffeqpy julia
 
+ADD common-2.8.0.tar.gz /opt/src/
 RUN cd /opt/src \
  && git clone --recursive -b main https://github.com/BlueBrain/neurodamus.git neurodamus-py \
  && cd neurodamus-py \
+ && cp /opt/src/common-2.8.0/hoc/* /opt/src/neurodamus-py/core/hoc \
  && /opt/conda/bin/pip install .
 ENV HOC_LIBRARY_PATH "/opt/src/neurodamus-py/core/hoc:$HOC_LIBRARY_PATH"
 
@@ -222,7 +227,7 @@ RUN cd /opt/src && mv synapse-tool-v0.6.4 synapse-tool && cd synapse-tool \
  && apt-get --yes -qq install libboost-all-dev \
  && git clone --recursive --depth 1 --branch v2.7.1 https://github.com/BlueBrain/HighFive.git \
  && sed -i "s/find_package(HighFive REQUIRED)/add_subdirectory(HighFive)/g" CMakeLists.txt \
- && git clone --recursive --depth 1 --branch v0.1.20 https://github.com/BlueBrain/libsonata.git \
+ && git clone --recursive --depth 1 --branch v0.1.22 https://github.com/BlueBrain/libsonata.git \
  && cd libsonata && mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=Release -DEXTLIB_FROM_SUBMODULES=ON -DCMAKE_INSTALL_PREFIX="./install" .. && make -j 4 && make -j 4 install \
  && cd /opt/src/synapse-tool \
  && mkdir build && cd build && cmake -DSYNTOOL_WITH_MPI=ON -DCMAKE_INSTALL_PREFIX="./install" -DCMAKE_PREFIX_PATH=/opt/src/synapse-tool/libsonata/build/install .. \
@@ -233,8 +238,8 @@ RUN cd /opt/src \
  && /opt/conda/bin/conda install -c conda-forge ncurses \
  && nrnivmodl -incflags "-DENABLE_SYNTOOL=1 -DDISABLE_REPORTINGLIB -I/opt/conda/include/ -I/opt/src/synapse-tool/build/install/include -I/opt/src/synapse-tool/build/install/include" -loadflags "-L/opt/conda/lib -L/opt/conda/lib64 -lmpi -L/opt/src/synapse-tool/build/install/lib -lsyn2 -L/opt/src/synapse-tool/libsonata/build/install/lib -lsonata" neurodamus_neocortex_multiscale_mod_full/
 ENV PATH "/opt/src/x86_64:$PATH"
-ENV LD_LIBRARY_PATH "/opt/src/synapse-tool/libsonata/build/install/lib:/opt/src/synapse-tool/build/install/lib:/opt/conda/lib:/opt/conda/lib64:$LD_LIBRARY_PATH"
+ENV LD_LIBRARY_PATH "/opt/src/x86_64:/opt/src/synapse-tool/libsonata/build/install/lib:/opt/src/synapse-tool/build/install/lib:/opt/conda/lib:/opt/conda/lib64:$LD_LIBRARY_PATH"
 ENV HDF5_DISABLE_VERSION_CHECK=1
 
-#ADD multiscale_run /opt/src/multiscale_run
-#ADD ngv_small_circuit/build /opt/src/ngv_small_circuit
+ADD multiscale_run /opt/src/multiscale_run
+ADD rat_sscx_S1HL_V9 /opt/src/rat_sscx_S1HL_V9
