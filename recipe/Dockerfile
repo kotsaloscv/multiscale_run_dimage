@@ -239,7 +239,5 @@ RUN cd /opt/src \
  && nrnivmodl -incflags "-DENABLE_SYNTOOL=1 -DDISABLE_REPORTINGLIB -I/opt/conda/include/ -I/opt/src/synapse-tool/build/install/include -I/opt/src/synapse-tool/build/install/include" -loadflags "-L/opt/conda/lib -L/opt/conda/lib64 -lmpi -L/opt/src/synapse-tool/build/install/lib -lsyn2 -L/opt/src/synapse-tool/libsonata/build/install/lib -lsonata" neurodamus_neocortex_multiscale_mod_full/
 ENV PATH "/opt/src/x86_64:$PATH"
 ENV LD_LIBRARY_PATH "/opt/src/x86_64:/opt/src/synapse-tool/libsonata/build/install/lib:/opt/src/synapse-tool/build/install/lib:/opt/conda/lib:/opt/conda/lib64:$LD_LIBRARY_PATH"
+ENV NRNMECH_LIB_PATH "/opt/src/x86_64/libnrnmech.so"
 ENV HDF5_DISABLE_VERSION_CHECK=1
-
-ADD multiscale_run /opt/src/multiscale_run
-ADD rat_sscx_S1HL_V9 /opt/src/rat_sscx_S1HL_V9
