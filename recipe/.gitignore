@@ -6,6 +6,5 @@
 !entrypoint
 !test_parallelism.tar.gz
 !julia_environment.tar.gz
-!synapse-tool-v0.6.4.tar.gz
 !neurodamus_neocortex_multiscale_mod_full.tar.gz
 !common-2.8.0.tar.gz
