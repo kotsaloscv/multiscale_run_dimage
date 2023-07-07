@@ -10,6 +10,14 @@ You must have:
 * [Docker Compose](https://docs.docker.com/compose) utility installed.
 * [Git](https://git-scm.com/)
 
+The image can be pulled from [dockerhub](https://hub.docker.com/):
+
+```bash
+docker pull kotsaloscv/multiscale_run:v0.0.0
+```
+
+Therefore, there is no need to build it.
+
 ## Fetch Multiscale Run Project
 
 These steps download a reduced/experimental version of multiscale run project:
@@ -18,6 +26,11 @@ These steps download a reduced/experimental version of multiscale run project:
 * Download [multiscale run](https://drive.google.com/file/d/1ZgdF4R2UgL_s8TK4lnb8qnSmhxex81gJ/view?usp=sharing) (click on the hyperlink).
 * Uncompress the downloaded project under the **notebooks** folder.
 * Follow the steps below to build & deploy the docker image.
+
+## Avoid build step
+
+The image is already built and pushed in dockerhub.
+If you just want to use it as is, with no changes in the recipe, just skip the `docker-compose build` step in the instructions below.
 
 ## Getting Started (MacOS & Linux)
 
@@ -28,6 +41,7 @@ python modules for all the coupled solvers.
 $ git clone https://github.com/kotsaloscv/multiscale_run_dimage.git
 $ cd multiscale_run_dimage
 $ echo "DUID=$(($(id -u)+1))\nDGID=$(id -g)\nHOST=$(hostname)" > .env
+$ # Skip the build step, since it is already available
 $ docker-compose build
 $ docker-compose up
 ...
@@ -45,43 +59,14 @@ http://127.0.0.1:8888/lab?token=596536b192733c7041b845a969e980e6814845132625e99e
 
 ## Files management
 
-Inside the JupyterLab files browser, you will be able to see `STEPS_Example` directory
-providing code samples to start with.
-
 You are free to modify the `notebooks` directory from either the container or
 your machine. Files created on one side will be visible on the other one, and vice versa!
 
-## Advanced Usage
-
-### Run big simulations in OSX
-
-On OSX, you may have to increase the memory allocated to the Docker containers
-to execute important simulations. Default reserved memory in 2GB.
-See official documentation [here](https://docs.docker.com/docker-for-mac/#memory)
-to increase it.
-
-### How to use traditional Jupyter Notebook
-
-Jupyter Notebook is very lazy when it comes to the syntax of ipynb files compared
-to JupyterLab. In JupyterLab, notebooks must be valid JSON files. This may prevent
-you to import your notebooks. In this case, you can either:
-
-* Fix JSON issues in your existing notebooks. To detect syntax errors, you can
-  use the command below:
-
-    ```bash
-    <YOUR_NOTEBOOK.ipynb python -m json.tool
-    ```
-
-* Use the `notebook` container provided in the `docker-compose.yml` file:
-
-    ```bash
-    docker-compose up notebook
-    ```
-
 ## Windows support
 
-This Docker image can be run with _Docker Desktop for Windows_. Instructions in the *Getting Started* section above are a bit different though. Instead of executing command `echo "DUID=$(($(id -u)+1))\nDGID=$(id -g)\nHOST=$(hostname)" > .env`, update the `docker-compose.yaml` file as follow:
+For Windows, the build step cannot be avoided due to the issue of the `./recipe/entrypoint` file (see below).
+
+This Docker image can be run with _Docker Desktop for Windows_. Instructions in the **Getting Started** section above are a bit different though. Instead of executing command `echo "DUID=$(($(id -u)+1))\nDGID=$(id -g)\nHOST=$(hostname)" > .env`, update the `docker-compose.yaml` file as follow:
 
 * **hostname**: hardcode the machine name
 * **USER_LOGIN**: hardcode your user name
@@ -120,13 +105,15 @@ index 528e993..64dcca9 100644
      command:
 ```
 
-Before running `docker-compose build`, it is imperative to open `./recipe/entrypoint` with Visual Code (or your favourite text editor), and change the **End of Line Sequence** from `CRLF` to `LF`.
+Before running `docker-compose build`, it is imperative to open `./recipe/entrypoint` with Visual Code (or your favourite text editor), and change the **End of Line Sequence** from `CRLF` to `LF` (see images below).
 
 From:
 ![image](images/crlf.png)
 
 To:
 ![image](images/lf.png)
+
+Finally, run `docker-compose up`.
 
 ## Acknowledgement
 
