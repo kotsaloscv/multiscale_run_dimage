@@ -10,14 +10,6 @@ You must have:
 * [Docker Compose](https://docs.docker.com/compose) utility installed.
 * [Git](https://git-scm.com/)
 
-The image can be pulled from [dockerhub](https://hub.docker.com/):
-
-```bash
-docker pull kotsaloscv/multiscale_run:v0.0.0
-```
-
-Therefore, there is no need to build it.
-
 ## Fetch Multiscale Run Project
 
 These steps download a reduced/experimental version of multiscale run project:
@@ -27,10 +19,10 @@ These steps download a reduced/experimental version of multiscale run project:
 * Uncompress the downloaded project under the **notebooks** folder.
 * Follow the steps below to build & deploy the docker image.
 
-## Avoid build step
+## Skip build step
 
-The image is already built and pushed in dockerhub.
-If you just want to use it as is, with no changes in the recipe, just skip the `docker-compose build` step in the instructions below.
+The image is already built and pushed in [dockerhub](https://hub.docker.com/) (search for `kotsaloscv/multiscale_run`).
+If you want to use it as is, with no changes in the recipe, just skip the `docker-compose build` step in the instructions below.
 
 ## Getting Started (MacOS & Linux)
 
@@ -64,9 +56,9 @@ your machine. Files created on one side will be visible on the other one, and vi
 
 ## Windows support
 
-For Windows, the build step cannot be avoided due to the issue of the `./recipe/entrypoint` file (see below).
+**For Windows, the build step cannot be avoided due to the issue of the `./recipe/entrypoint` file (see below).**
 
-This Docker image can be run with _Docker Desktop for Windows_. Instructions in the **Getting Started** section above are a bit different though. Instead of executing command `echo "DUID=$(($(id -u)+1))\nDGID=$(id -g)\nHOST=$(hostname)" > .env`, update the `docker-compose.yaml` file as follow:
+This Docker image can be run with _Docker Desktop for Windows_. Instructions in the **Getting Started** section above are a bit different though. Instead of executing command `echo "DUID=$(($(id -u)+1))\nDGID=$(id -g)\nHOST=$(hostname)" > .env`, update the `docker-compose.yaml` file as follows:
 
 * **hostname**: hardcode the machine name
 * **USER_LOGIN**: hardcode your user name
