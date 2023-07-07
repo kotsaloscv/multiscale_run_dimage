@@ -205,7 +205,7 @@ RUN if [ -d "${JULIA_DEPOT_PATH}" ]; then \
 
 ADD common-2.8.0.tar.gz /opt/src/
 RUN cd /opt/src \
- && git clone --recursive -b main https://github.com/BlueBrain/neurodamus.git neurodamus-py \
+ && git clone --recursive -b BBPBGLIB-1035/drop-syntool https://github.com/BlueBrain/neurodamus.git neurodamus-py \
  && cd neurodamus-py \
  && cp /opt/src/common-2.8.0/hoc/* /opt/src/neurodamus-py/core/hoc \
  && /opt/conda/bin/pip install .
@@ -221,23 +221,20 @@ RUN cd /opt/src \
 ENV PATH "/opt/src/nrn/build/install/bin:$PATH"
 ENV PYTHONPATH "/opt/src/nrn/build/install/lib/python:$PYTHONPATH"
 
-ADD synapse-tool-v0.6.4.tar.gz /opt/src/
-RUN cd /opt/src && mv synapse-tool-v0.6.4 synapse-tool && cd synapse-tool \
+RUN cd /opt/src \
  && apt-get --yes -qq update \
  && apt-get --yes -qq install libboost-all-dev \
- && git clone --recursive --depth 1 --branch v2.7.1 https://github.com/BlueBrain/HighFive.git \
- && sed -i "s/find_package(HighFive REQUIRED)/add_subdirectory(HighFive)/g" CMakeLists.txt \
  && git clone --recursive --depth 1 --branch v0.1.22 https://github.com/BlueBrain/libsonata.git \
- && cd libsonata && mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=Release -DEXTLIB_FROM_SUBMODULES=ON -DCMAKE_INSTALL_PREFIX="./install" .. && make -j 4 && make -j 4 install \
- && cd /opt/src/synapse-tool \
- && mkdir build && cd build && cmake -DSYNTOOL_WITH_MPI=ON -DCMAKE_INSTALL_PREFIX="./install" -DCMAKE_PREFIX_PATH=/opt/src/synapse-tool/libsonata/build/install .. \
+ && cd libsonata \
+ && mkdir build && cd build \
+ && cmake -DCMAKE_BUILD_TYPE=Release -DEXTLIB_FROM_SUBMODULES=ON -DCMAKE_INSTALL_PREFIX="./install" .. \
  && make -j 4 && make -j 4 install
 
 ADD neurodamus_neocortex_multiscale_mod_full.tar.gz /opt/src/
 RUN cd /opt/src \
  && /opt/conda/bin/conda install -c conda-forge ncurses \
- && nrnivmodl -incflags "-DENABLE_SYNTOOL=1 -DDISABLE_REPORTINGLIB -I/opt/conda/include/ -I/opt/src/synapse-tool/build/install/include -I/opt/src/synapse-tool/build/install/include" -loadflags "-L/opt/conda/lib -L/opt/conda/lib64 -lmpi -L/opt/src/synapse-tool/build/install/lib -lsyn2 -L/opt/src/synapse-tool/libsonata/build/install/lib -lsonata" neurodamus_neocortex_multiscale_mod_full/
+ && nrnivmodl -incflags "-DDISABLE_REPORTINGLIB -I/opt/conda/include/" -loadflags "-L/opt/conda/lib -L/opt/conda/lib64 -lmpi -lhdf5 -L/opt/src/libsonata/build/install/lib -lsonata" neurodamus_neocortex_multiscale_mod_full/
 ENV PATH "/opt/src/x86_64:$PATH"
-ENV LD_LIBRARY_PATH "/opt/src/x86_64:/opt/src/synapse-tool/libsonata/build/install/lib:/opt/src/synapse-tool/build/install/lib:/opt/conda/lib:/opt/conda/lib64:$LD_LIBRARY_PATH"
+ENV LD_LIBRARY_PATH "/opt/src/x86_64:/opt/src/libsonata/build/install/lib:/opt/conda/lib:/opt/conda/lib64:$LD_LIBRARY_PATH"
 ENV NRNMECH_LIB_PATH "/opt/src/x86_64/libnrnmech.so"
 ENV HDF5_DISABLE_VERSION_CHECK=1
