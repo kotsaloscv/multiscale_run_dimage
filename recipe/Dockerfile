@@ -102,6 +102,7 @@ RUN git clone --recursive \
  && cd /var/src/STEPS \
  && git checkout "$STEPS_VERSION" \
  && git submodule update --init --recursive \
+ && sed -i 's/if(TARGET_NATIVE_ARCH)/set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mno-avx512f")\nif(TARGET_NATIVE_ARCH)/g' CMakeLists.txt \
  && mkdir build \
  && cd build \
  && cmake \
