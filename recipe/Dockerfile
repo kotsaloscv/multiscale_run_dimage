@@ -216,7 +216,7 @@ RUN cd /opt/src \
  && apt-get --yes -qq install bison flex \
  && git clone --recursive --depth 1 --branch 8.2.2 https://github.com/neuronsimulator/nrn.git \
  && cd nrn && mkdir build && cd build \
- && cmake .. -DNRN_ENABLE_INTERVIEWS=OFF -DNRN_ENABLE_RX3D=OFF -DCMAKE_INSTALL_PREFIX=`pwd`/install -DNRN_ENABLE_CORENEURON=OFF -DCORENRN_ENABLE_OPENMP=OFF -DNRN_ENABLE_TESTS=OFF -DPYTHON_EXECUTABLE=$(which python3) \
+ && cmake .. -DNRN_ENABLE_MPI=ON -DNRN_ENABLE_INTERVIEWS=OFF -DNRN_ENABLE_RX3D=OFF -DCMAKE_INSTALL_PREFIX=`pwd`/install -DNRN_ENABLE_CORENEURON=OFF -DCORENRN_ENABLE_OPENMP=OFF -DNRN_ENABLE_TESTS=OFF -DPYTHON_EXECUTABLE=$(which python3) \
  && make -j 4 && make -j 4 install
 ENV PATH "/opt/src/nrn/build/install/bin:$PATH"
 ENV PYTHONPATH "/opt/src/nrn/build/install/lib/python:$PYTHONPATH"
