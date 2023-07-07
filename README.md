@@ -107,6 +107,20 @@ To:
 
 Finally, run `docker-compose up`.
 
+## Use the container without JupyterLab (for all operating systems)
+
+If there is no need for the JupyterLab infrastructure, the image can be directly pulled from dockerhub (no need for manual build in Windows):
+
+```bash
+docker pull kotsaloscv/multiscale_run:v0.0.0
+```
+
+and, it can be executed as
+
+```bash
+docker run --rm -it kotsaloscv/multiscale_run:v0.0.0 bash
+```
+
 ## Acknowledgement
 
 The development of this software was supported by funding to the Blue Brain Project, a research center of the
