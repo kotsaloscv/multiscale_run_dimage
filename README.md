@@ -32,7 +32,7 @@ python modules for all the coupled solvers.
 ```bash
 $ git clone https://github.com/kotsaloscv/multiscale_run_dimage.git
 $ cd multiscale_run_dimage
-$ echo "DUID=$(($(id -u)+1))\nDGID=$(id -g)\nHOST=$(hostname)" > .env
+$ echo -e "DUID=$(($(id -u)+1))\nDGID=$(id -g)\nHOST=$(hostname)" > .env
 $ # Skip the build step, since it is already available
 $ docker-compose build
 $ docker-compose up
@@ -58,7 +58,7 @@ your machine. Files created on one side will be visible on the other one, and vi
 
 **For Windows, the build step cannot be avoided due to the issue of the `./recipe/entrypoint` file (see below).**
 
-This Docker image can be run with _Docker Desktop for Windows_. Instructions in the **Getting Started** section above are a bit different though. Instead of executing command `echo "DUID=$(($(id -u)+1))\nDGID=$(id -g)\nHOST=$(hostname)" > .env`, update the `docker-compose.yaml` file as follows:
+This Docker image can be run with _Docker Desktop for Windows_. Instructions in the **Getting Started** section above are a bit different though. Instead of executing command `echo -e "DUID=$(($(id -u)+1))\nDGID=$(id -g)\nHOST=$(hostname)" > .env`, update the `docker-compose.yaml` file as follows:
 
 * **hostname**: hardcode the machine name
 * **USER_LOGIN**: hardcode your user name
