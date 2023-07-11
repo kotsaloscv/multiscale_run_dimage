@@ -1,4 +1,4 @@
-# Multiscale Run Docker Image
+# Multiscale Run Docker Recipe
 
 This repository provides the Docker recipe for the multiscale run project, i.e. the project that couples [Neurodamus](https://github.com/BlueBrain/neurodamus), [STEPS](https://github.com/CNS-OIST/STEPS), [AstroVascPy](https://github.com/BlueBrain/AstroVascPy) & [metabolism](https://www.epfl.ch/research/domains/bluebrain/blue-brain/people/our-people/simulation-neuroscience-division/polina-shichkova/).
 
@@ -10,24 +10,13 @@ You must have:
 * [Docker Compose](https://docs.docker.com/compose) utility installed.
 * [Git](https://git-scm.com/)
 
-## Fetch Multiscale Run Project
-
-These steps download a reduced/experimental version of multiscale run project:
-
-* If on MacOS/Linux (**pip required**), `./setup_multiscale_run.sh`, and skip the steps below.
-* Download [multiscale run](https://drive.google.com/file/d/1ZgdF4R2UgL_s8TK4lnb8qnSmhxex81gJ/view?usp=sharing) (click on the hyperlink).
-* Uncompress the downloaded project under the **notebooks** folder.
-* Follow the steps below to build & deploy the docker image.
-
-## Skip build step
-
-The image is already built and pushed in [dockerhub](https://hub.docker.com/) (search for `kotsaloscv/multiscale_run`).
-If you want to use it as is, with no changes in the recipe, just skip the `docker-compose build` step in the instructions below.
-
 ## Getting Started (MacOS & Linux)
 
 The set of commands below will start a JupyterLab container providing
 python modules for all the coupled solvers.
+
+The image is already built and pushed in [dockerhub](https://hub.docker.com/) (named `kotsaloscv/multiscale_run:v0.0.0`).
+If you want to use it as is, with no changes in the recipe, just skip the `docker-compose build` step in the instructions below.
 
 ```bash
 $ git clone https://github.com/kotsaloscv/multiscale_run_dimage.git
@@ -49,6 +38,15 @@ multiscale_run_dimage-lab-1  |         http://127.0.0.1:8888/lab?token=596536b19
 Then open your web browser at the provided HTTP address. In this case
 http://127.0.0.1:8888/lab?token=596536b192733c7041b845a969e980e6814845132625e99e
 
+## Fetch Multiscale Run Project
+
+These steps download a reduced/experimental version of multiscale run project:
+
+* If on MacOS/Linux (**pip required**), `./setup_multiscale_run.sh`, and skip the steps below.
+* Download [multiscale run](https://drive.google.com/file/d/1ZgdF4R2UgL_s8TK4lnb8qnSmhxex81gJ/view?usp=sharing) (click on the hyperlink).
+* Uncompress the downloaded project under the **notebooks** folder.
+* Follow the steps below to build & deploy the docker image.
+
 ## Files management
 
 You are free to modify the `notebooks` directory from either the container or
@@ -58,7 +56,7 @@ your machine. Files created on one side will be visible on the other one, and vi
 
 **For Windows, the build step cannot be avoided due to the issue of the `./recipe/entrypoint` file (see below).**
 
-This Docker image can be run with _Docker Desktop for Windows_. Instructions in the **Getting Started** section above are a bit different though. Instead of executing command `echo -e "DUID=$(($(id -u)+1))\nDGID=$(id -g)\nHOST=$(hostname)" > .env`, update the `docker-compose.yaml` file as follows:
+This Docker image can be run with _Docker Desktop for Windows_. Instructions in the **Getting Started** section above are a bit different though. Instead of executing the command `echo -e "DUID=$(($(id -u)+1))\nDGID=$(id -g)\nHOST=$(hostname)" > .env`, update the `docker-compose.yaml` file as follows:
 
 * **hostname**: hardcode the machine name
 * **USER_LOGIN**: hardcode your user name
