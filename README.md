@@ -15,15 +15,15 @@ You must have:
 The set of commands below will start a JupyterLab container providing python modules for all the coupled solvers.
 
 The image is already built and pushed in [dockerhub](https://hub.docker.com/) (named `kotsaloscv/multiscale_run:v0.0.0`).
-If you want to use it as is, with no changes in the recipe, just skip the `docker-compose build` step in the instructions below.
+If you want to use it as is, with no changes in the recipe, just skip the `docker compose build` step in the instructions below.
 
 ```bash
 $ git clone https://github.com/kotsaloscv/multiscale_run_dimage.git
 $ cd multiscale_run_dimage
 $ echo -e "DUID=$(($(id -u)+1))\nDGID=$(id -g)\nHOST=$(hostname)" > .env
 $ # Skip the build step, since it is already available
-$ #docker-compose build
-$ docker-compose up
+$ #docker compose build
+$ docker compose up
 ... output ...
 multiscale_run_dimage-lab-1  | [C 2023-07-05 13:59:36.052 ServerApp] 
 multiscale_run_dimage-lab-1  |     
@@ -57,7 +57,7 @@ your machine. Files created on one side will be visible on the other one, and vi
 
 **For Windows, the build step cannot be avoided due to the issue of the `./recipe/entrypoint` file (see below).**
 
-This Docker image can be run with _Docker Desktop for Windows_. Instructions in the **Getting Started** section above are a bit different though. Instead of executing the command `echo -e "DUID=$(($(id -u)+1))\nDGID=$(id -g)\nHOST=$(hostname)" > .env`, update the `docker-compose.yaml` file as follows:
+This Docker image can be run with _Docker Desktop for Windows_. Instructions in the **Getting Started** section above are a bit different though. Instead of executing the command `echo -e "DUID=$(($(id -u)+1))\nDGID=$(id -g)\nHOST=$(hostname)" > .env`, update the `docker-compose.yml` file as follows:
 
 * **hostname**: hardcode the machine name
 * **USER_LOGIN**: hardcode your user name
@@ -96,7 +96,7 @@ index 528e993..64dcca9 100644
      command:
 ```
 
-Before running `docker-compose build`, it is imperative to open `./recipe/entrypoint` with Visual Code (or your favourite text editor), and change the **End of Line Sequence** from `CRLF` to `LF` (see images below).
+Before running `docker compose build`, it is imperative to open `./recipe/entrypoint` with Visual Code (or your favourite text editor), and change the **End of Line Sequence** from `CRLF` to `LF` (see images below).
 
 From:
 ![image](images/crlf.png)
@@ -104,7 +104,7 @@ From:
 To:
 ![image](images/lf.png)
 
-Finally, run `docker-compose up`.
+Finally, run `docker compose up`.
 
 ## Use the container without JupyterLab (for all operating systems)
 

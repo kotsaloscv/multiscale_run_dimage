@@ -240,3 +240,5 @@ ENV PATH "/opt/src/x86_64:$PATH"
 ENV LD_LIBRARY_PATH "/opt/src/x86_64:/opt/src/libsonata/build/install/lib:/opt/conda/lib:/opt/conda/lib64:$LD_LIBRARY_PATH"
 ENV NRNMECH_LIB_PATH "/opt/src/x86_64/libnrnmech.so"
 ENV HDF5_DISABLE_VERSION_CHECK=1
+
+RUN /opt/conda/bin/pip install gdown
