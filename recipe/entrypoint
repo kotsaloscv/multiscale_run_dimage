@@ -37,9 +37,9 @@ for path in /.jupyter /.local /opt/src ; do
     chmod +t "$path"
 done
 
-EXAMPLE_DIR=/opt/src/notebooks/user_manual
+EXAMPLE_DIR=/opt/src/notebooks/STEPS_user_manual
 if ! [ -d "$EXAMPLE_DIR" ] ;then
-    cp -r /var/src/user_manual "$EXAMPLE_DIR"
+    cp -r /var/src/STEPS_user_manual "$EXAMPLE_DIR"
     chown -R dummy:dummy "$EXAMPLE_DIR"
 fi
 

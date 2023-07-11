@@ -131,7 +131,8 @@ RUN echo "/usr/lib/python3.8/config-3.8-x86_64-linux-gnu" >> /etc/ld.so.conf.d/p
 
 ARG EXAMPLE_NOTEBOOKS_TO_REBUILD="diffusion_boundary diffusion getting_started ip3 memb_pot sbml_importer surface_diffusion_boundary surface_diffusion well_mixed"
 # https://nbconvert.readthedocs.io/en/latest/usage.html#convert-notebook
-RUN cd /var/src/user_manual \
+RUN cd /var/src \
+ && mv user_manual STEPS_user_manual && cd STEPS_user_manual \
  && jupyter nbconvert \
       --to notebook \
       --execute \

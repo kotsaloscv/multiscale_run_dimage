@@ -6,8 +6,8 @@ This repository provides the Docker recipe for the multiscale run project, i.e. 
 
 You must have:
 
-* [Docker](https://www.docker.com/community-edition) installed and running.
-* [Docker Compose](https://docs.docker.com/compose) utility installed.
+* [Docker Desktop](https://www.docker.com/) installed and running.
+* [Docker Compose](https://docs.docker.com/compose) utility installed (included with latest supported versions of Docker Desktop).
 * [Git](https://git-scm.com/)
 
 ## Getting Started (MacOS & Linux)
@@ -43,7 +43,7 @@ If you have an active Jupyter Lab, then you need to open a new terminal and perf
 
 These steps download a reduced/experimental version of multiscale run project:
 
-* If on MacOS/Linux (**pip required**), `./setup_multiscale_run.sh`, and skip the three steps below.
+* If on MacOS/Linux (**pip required**), `./fetch_multiscale_run.sh`, and skip the three steps below.
 * Download [multiscale run](https://drive.google.com/file/d/1ZgdF4R2UgL_s8TK4lnb8qnSmhxex81gJ/view?usp=sharing) (click on the hyperlink).
 * Uncompress the downloaded project under the **notebooks** folder.
 * Follow the steps below to build & deploy the docker image.
