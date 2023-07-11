@@ -12,8 +12,7 @@ You must have:
 
 ## Getting Started (MacOS & Linux)
 
-The set of commands below will start a JupyterLab container providing
-python modules for all the coupled solvers.
+The set of commands below will start a JupyterLab container providing python modules for all the coupled solvers.
 
 The image is already built and pushed in [dockerhub](https://hub.docker.com/) (named `kotsaloscv/multiscale_run:v0.0.0`).
 If you want to use it as is, with no changes in the recipe, just skip the `docker-compose build` step in the instructions below.
@@ -23,9 +22,9 @@ $ git clone https://github.com/kotsaloscv/multiscale_run_dimage.git
 $ cd multiscale_run_dimage
 $ echo -e "DUID=$(($(id -u)+1))\nDGID=$(id -g)\nHOST=$(hostname)" > .env
 $ # Skip the build step, since it is already available
-$ docker-compose build
+$ #docker-compose build
 $ docker-compose up
-...
+... output ...
 multiscale_run_dimage-lab-1  | [C 2023-07-05 13:59:36.052 ServerApp] 
 multiscale_run_dimage-lab-1  |     
 multiscale_run_dimage-lab-1  |     To access the server, open this file in a browser:
@@ -40,9 +39,11 @@ http://127.0.0.1:8888/lab?token=596536b192733c7041b845a969e980e6814845132625e99e
 
 ## Fetch Multiscale Run Project
 
+If you have an active Jupyter Lab, then you need to open a new terminal and perform the steps below.
+
 These steps download a reduced/experimental version of multiscale run project:
 
-* If on MacOS/Linux (**pip required**), `./setup_multiscale_run.sh`, and skip the steps below.
+* If on MacOS/Linux (**pip required**), `./setup_multiscale_run.sh`, and skip the three steps below.
 * Download [multiscale run](https://drive.google.com/file/d/1ZgdF4R2UgL_s8TK4lnb8qnSmhxex81gJ/view?usp=sharing) (click on the hyperlink).
 * Uncompress the downloaded project under the **notebooks** folder.
 * Follow the steps below to build & deploy the docker image.
