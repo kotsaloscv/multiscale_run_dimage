@@ -43,10 +43,12 @@ If you have an active Jupyter Lab, then you need to open a new terminal and perf
 
 These steps download a reduced/experimental version of multiscale run project:
 
-* If on MacOS/Linux (**pip required**), `./fetch_multiscale_run.sh`, and skip the three steps below.
+* If on MacOS/Linux (**pip required**), `./fetch_multiscale_run.sh`, and skip the two steps below.
 * Download [multiscale run](https://drive.google.com/file/d/1ZgdF4R2UgL_s8TK4lnb8qnSmhxex81gJ/view?usp=sharing) (click on the hyperlink).
 * Uncompress the downloaded project under the **notebooks** folder.
-* Follow the steps below to build & deploy the docker image.
+
+After these steps, the multiscale run project is under the notebooks folder.
+Therefore, it can be viewed and executed from the Jupyter Lab.
 
 ## Files management
 
