@@ -37,6 +37,9 @@ multiscale_run_dimage-lab-1  |         http://127.0.0.1:8888/lab?token=596536b19
 Then open your web browser at the provided HTTP address. In this case
 http://127.0.0.1:8888/lab?token=596536b192733c7041b845a969e980e6814845132625e99e
 
+In the `echo -e "DUID=$(($(id -u)+1))\nDGID=$(id -g)\nHOST=$(hostname)" > .env` command, there is a `+1` on the `DUID`.
+If you get permission errors for files generated from within the container, then call again the above command with `+0`, and re-run the Jupyter Lab.
+
 ## Fetch Multiscale Run Project
 
 If you have an active Jupyter Lab, then you need to open a new terminal and perform the steps below.
