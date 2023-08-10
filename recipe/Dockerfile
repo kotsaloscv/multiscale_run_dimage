@@ -102,7 +102,6 @@ RUN git clone --recursive \
  && cd /var/src/STEPS \
  && git checkout "$STEPS_VERSION" \
  && git submodule update --init --recursive \
- && sed -i 's/if(TARGET_NATIVE_ARCH)/set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mno-avx512f")\nif(TARGET_NATIVE_ARCH)/g' CMakeLists.txt \
  && mkdir build \
  && cd build \
  && cmake \
@@ -110,6 +109,7 @@ RUN git clone --recursive \
       -DUSE_BUNDLE_OMEGA_H:BOOL=FALSE \
       -DUSE_MPI:BOOL=ON \
       -DUSE_DISTRIBUTED_MESH:BOOL=TRUE \
+      -DTARGET_NATIVE_ARCH:BOOL=FALSE \
       -DPYTHON_LIBRARY:FILEPATH=/opt/conda/lib/libpython3.9.so \
       .. \
  && make -j 4 all \
@@ -207,7 +207,7 @@ RUN if [ -d "${JULIA_DEPOT_PATH}" ]; then \
 
 ADD common-2.8.0.tar.gz /opt/src/
 RUN cd /opt/src \
- && git clone --recursive -b BBPBGLIB-1035/drop-syntool https://github.com/BlueBrain/neurodamus.git neurodamus-py \
+ && git clone --recursive -b main https://github.com/BlueBrain/neurodamus.git neurodamus-py \
  && cd neurodamus-py \
  && cp /opt/src/common-2.8.0/hoc/* /opt/src/neurodamus-py/core/hoc \
  && /opt/conda/bin/pip install .
