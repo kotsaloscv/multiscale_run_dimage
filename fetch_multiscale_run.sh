@@ -1,6 +1,8 @@
+#!/bin/sh -e
+
 # Download multiscale run project from Google Drive and extract in notebooks folder
 
-pip install gdown
+pip3 install gdown
 
 gdown 1ZgdF4R2UgL_s8TK4lnb8qnSmhxex81gJ
 
