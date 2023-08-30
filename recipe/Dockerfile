@@ -103,6 +103,7 @@ RUN cd /opt/src \
 ENV PATH "/opt/src/nrn/build/install/bin:$PATH"
 ENV PYTHONPATH "/opt/src/nrn/build/install/lib/python:$PYTHONPATH"
 
+# Build special for multiscale run
 ADD neurodamus_neocortex_multiscale_mod_full.tar.gz /opt/src/
 RUN cd /opt/src \
  && /opt/conda/bin/conda install -c conda-forge ncurses \
@@ -112,4 +113,5 @@ ENV LD_LIBRARY_PATH "/opt/src/x86_64:/opt/src/libsonata/build/install/lib:$SONAT
 ENV NRNMECH_LIB_PATH "/opt/src/x86_64/libnrnmech.so"
 ENV HDF5_DISABLE_VERSION_CHECK=1
 
+# Utility tool to download files from Google Drive
 RUN /opt/conda/bin/pip install gdown
